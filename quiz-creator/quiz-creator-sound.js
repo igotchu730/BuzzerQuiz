@@ -1,4 +1,3 @@
-const API_BASE = window.API_BASE;
 
 // Title setup
 const params = new URLSearchParams(window.location.search);
