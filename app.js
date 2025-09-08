@@ -7,6 +7,12 @@ const fs = require('fs');
 const crypto = require('crypto');
 require('dotenv').config();
 
+// Ensure uploads folder exists at runtime
+const uploadPath = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
+
 
 // use disk storage to store files
 const storage = multer.diskStorage({
