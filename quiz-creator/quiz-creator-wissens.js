@@ -1,3 +1,5 @@
+const API_BASE = window.API_BASE;
+
 // Title setting from URL
 const params = new URLSearchParams(window.location.search);
 const mainTitle = params.get("quizType") || "QuizTitleDefault";
@@ -271,7 +273,7 @@ async function handleDeleteQuestion(index) {
     quiz.questions.splice(index, 1); // remove the question
 
     // Save updated quiz
-    await fetch(`http://localhost:3000/api/quiz/${quizName}`, {
+    await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(quiz)
@@ -309,7 +311,7 @@ function renderQuizItem(quiz, index) {
     // check radio buttons and update active quiz
     radio.onchange = async () => {
     try {
-        const res = await fetch(`http://localhost:3000/api/quiz/${encodeURIComponent(quiz.quizName)}/set-active`, {
+        const res = await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quiz.quizName)}/set-active`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

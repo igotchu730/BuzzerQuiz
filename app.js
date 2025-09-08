@@ -42,6 +42,11 @@ const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017/quizapp';
 const PORT = process.env.PORT || 3000;
 mongoose.connect(MONGO_URL);
 
+app.get("/config.js", (req, res) => {
+  res.type("application/javascript");
+  res.send(`window.API_BASE="${process.env.BASE_URL}";`);
+});
+
 
 
 // Define Schema

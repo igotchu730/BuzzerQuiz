@@ -1,3 +1,5 @@
+const API_BASE = window.API_BASE;
+
 // Title setup
 const params = new URLSearchParams(window.location.search);
 const mainTitle = params.get("quizType") || "QuizTitleDefault";
@@ -51,7 +53,7 @@ document.getElementById('submitButton').onclick = async () => {
                 formData.append("oldImagePath", oldQuestion.imagePath);
             }
 
-            const res = await fetch(`http://localhost:3000/api/quiz/${quizName}/edit-image-question`, {
+            const res = await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}/edit-image-question`, {
                 method: "POST",
                 body: formData
             });
@@ -190,7 +192,7 @@ saveBtn.onclick = async () => {
         quiz.questions.push(questionObj);
     }
 
-    await fetch(`http://localhost:3000/api/quiz/${quizName}`, {
+    await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(quiz)
@@ -311,7 +313,7 @@ async function handleDeleteQuestion(index) {
   // Delete the image from server if it exists
   if (imagePath) {
     try {
-      await fetch('http://localhost:3000/api/delete-image', {
+      await fetch(`${API_BASE}/api/delete-image`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imagePath })
@@ -325,7 +327,7 @@ async function handleDeleteQuestion(index) {
   quiz.questions.splice(index, 1);
 
   // Save updated quiz
-  await fetch(`http://localhost:3000/api/quiz/${quizName}`, {
+  await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(quiz)
@@ -358,9 +360,8 @@ function renderQuizItem(quiz, index) {
 
     radio.onchange = async () => {
         try {
-            //console.log("Activating quiz:", quiz);
             const normalizedQuizAge = quiz.quizAge ?? '';
-            const res = await fetch(`http://localhost:3000/api/quiz/${quiz.quizName}/set-active`, {
+            const res = await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quiz.quizName)}/set-active`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -457,8 +458,6 @@ function renderQuizItem(quiz, index) {
             resetConfirmHandler(); //restore question deletion logic
         };
 
-
-
         noBtn.onclick = () => {
             modal.classList.add('hidden');
         };
@@ -470,7 +469,6 @@ function renderQuizItem(quiz, index) {
     return container;
 }
 
-// Restore screen state on back/forward navigation
 // Restore screen state on back/forward navigation
 window.addEventListener('popstate', () => {
     const state = history.state;

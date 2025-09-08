@@ -1,3 +1,5 @@
+const API_BASE = window.API_BASE;
+
 // Title setup
 const params = new URLSearchParams(window.location.search);
 const mainTitle = params.get("quizType") || "QuizTitleDefault";
@@ -32,8 +34,6 @@ document.getElementById('submitButton').onclick = async () => {
         return alert("Bitte alle Felder ausfüllen.");
     }
 
-
-
     const urlParams = new URLSearchParams(window.location.search);
     const quizType = urlParams.get('quizType');
     const quizLanguage = urlParams.get('quizLanguage');
@@ -66,8 +66,6 @@ document.getElementById('submitButton').onclick = async () => {
 
     questionObj.questionText = questionText;
 
-
-
     try {
         if (currentEditingIndex !== null) {
             const quiz = await getQuizByName(quizName, quizType, quizAge, quizLanguage);
@@ -94,7 +92,7 @@ document.getElementById('submitButton').onclick = async () => {
                 }
             }
 
-            const res = await fetch(`http://localhost:3000/api/quiz/${quizName}/edit-media-question`, {
+            const res = await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}/edit-media-question`, {
                 method: "POST",
                 body: formData
             });
@@ -249,7 +247,7 @@ saveBtn.onclick = async () => {
         quiz.questions.push(questionObj);
     }
 
-    await fetch(`http://localhost:3000/api/quiz/${quizName}`, {
+    await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(quiz)
@@ -350,8 +348,6 @@ function renderQuestionItem(question, index) {
                 soundDiv.textContent = `${soundName}`;
                 soundFileNameDiv.appendChild(soundDiv);
             }
-
-
         }
 
         fileNameDiv.style.display = 'block';
@@ -364,8 +360,6 @@ function renderQuestionItem(question, index) {
         document.getElementById('bildAnswer').scrollIntoView({ behavior: 'smooth' });
     };
 
-
-
     const rightTrash = document.createElement('img');
     rightTrash.src = '/assets/trashBtn.svg';
     rightTrash.alt = 'Trash';
@@ -375,7 +369,6 @@ function renderQuestionItem(question, index) {
         pendingDeleteIndex = index;
         document.getElementById('customModal').classList.remove('hidden');
     };
-
 
     container.appendChild(leftTrash);
     container.appendChild(div);
@@ -403,48 +396,46 @@ async function handleDeleteQuestion(index) {
         return;
     }
 
-  // Get the image path of the question being deleted
-  const imagePath = quiz.questions[index]?.imagePath;
-  // Get the sound path of the question being deleted
-  const soundPath = quiz.questions[index]?.soundPath;
+    // Get the image path of the question being deleted
+    const imagePath = quiz.questions[index]?.imagePath;
+    // Get the sound path of the question being deleted
+    const soundPath = quiz.questions[index]?.soundPath;
 
-  // Delete the image from server if it exists
-  if (imagePath) {
-    try {
-      await fetch('http://localhost:3000/api/delete-image', {
-        method: 'POST',
+    // Delete the image from server if it exists
+    if (imagePath) {
+        try {
+            await fetch(`${API_BASE}/api/delete-image`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ imagePath })
+            });
+        } catch (err) {
+            console.warn('Fehler beim Löschen des Bildes:', err);
+        }
+    }
+    if (soundPath) {
+        try {
+            await fetch(`${API_BASE}/api/delete-image`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ imagePath: soundPath }) // it's the same endpoint
+            });
+        } catch (err) {
+            console.warn('Fehler beim Löschen des Sounds:', err);
+        }
+    }
+
+    // Remove question from array
+    quiz.questions.splice(index, 1);
+
+    // Save updated quiz
+    await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imagePath })
-      });
-    } catch (err) {
-      console.warn('Fehler beim Löschen des Bildes:', err);
-    }
-  }
-  if (soundPath) {
-    try {
-        await fetch('http://localhost:3000/api/delete-image', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ imagePath: soundPath }) // it's the same endpoint
-        });
-    } catch (err) {
-        console.warn('Fehler beim Löschen des Sounds:', err);
-    }
-  }
+        body: JSON.stringify(quiz)
+    });
 
-
-  // Remove question from array
-  quiz.questions.splice(index, 1);
-
-  // Save updated quiz
-  await fetch(`http://localhost:3000/api/quiz/${quizName}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(quiz)
-  });
-
-  populateQuestionsFromMongo(quizName, quizType, quizAge, quizLanguage, 'questionsList', renderQuestionItem);
-
+    populateQuestionsFromMongo(quizName, quizType, quizAge, quizLanguage, 'questionsList', renderQuestionItem);
 }
 
 
@@ -481,9 +472,8 @@ function renderQuizItem(quiz, index) {
 
     radio.onchange = async () => {
         try {
-            //console.log("Activating quiz:", quiz);
             const normalizedQuizAge = quiz.quizAge ?? '';
-            const res = await fetch(`http://localhost:3000/api/quiz/${quiz.quizName}/set-active`, {
+            const res = await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quiz.quizName)}/set-active`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -579,8 +569,6 @@ function renderQuizItem(quiz, index) {
             document.getElementById('questionsList').innerHTML = '';
             resetConfirmHandler(); //restore question deletion logic
         };
-
-
 
         noBtn.onclick = () => {
             modal.classList.add('hidden');
