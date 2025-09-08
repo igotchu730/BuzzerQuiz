@@ -1,0 +1,615 @@
+/* Global styling */
+*{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Main body styling */
+body{
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    background: radial-gradient(circle at top left,rgba(255, 255, 255, 1) 0%, rgba(0, 0, 148, 1) 43%, rgba(255, 0, 0, 1) 100%);
+}
+
+/* Main working area */
+#main{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
+    height: auto;
+}
+
+/* container for whole title */
+#title-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: clamp(10rem, calc(10vw + 10rem), 20rem);
+}
+
+/* title red bar  */
+#redBar{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0.5rem;
+
+    background-color: darkred;
+    font-size: clamp(3rem, calc(3vw + 1rem), 5rem);
+    font-weight: 700;
+    color: #2c2b2b;
+}
+
+/* bottom container for preselection questions */
+#main-selection{
+    height: auto;
+}
+
+/* div for language select */
+#langSelect{
+    display: flex;
+}
+
+/* class for preselect questions */
+.preSelect{
+    display: flex;
+    justify-content: center;
+    height: auto;
+    gap: clamp(5rem, calc(7vw + 5rem), 20rem);
+
+    font-size: clamp(3rem, calc(3vw + 1rem), 5rem);
+    font-weight: 700;
+    color: #2c2b2b;
+}
+
+/* class for left or right side preselect*/
+.option{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+    padding: clamp(1rem, 4vw, 3rem);
+}
+
+/* class for buzzers */
+.buzzer {
+    width: clamp(6rem, 15vw, 12rem);
+    height: auto;
+}
+
+/* class for flags */
+.flag {
+    width: clamp(6rem, 20vw, 15rem);
+    height: auto;
+}
+
+
+
+/* contaier for clock  */
+#clockContainer{
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem;
+}
+/* clock image */
+#clockImg{
+    width: clamp(3rem, 15vw, 7rem);
+    height: auto;
+}
+/* time */
+#totalTimeLeft{
+  color: white;
+  font-weight: bold;
+  font-size: clamp(0.25rem, 3vw, 2rem);
+}
+
+
+
+/* contianer for whole question screen  */
+#questionScreen{
+    display:none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100dvh;
+}
+
+/* contaier for score  */
+#scoreObject, #scoreObjectBuzz, #scoreObjectReveal, #scoreObjectAnswerCheck, #scoreObjectAnswerConfirm{
+    display: flex;
+    flex-direction: row;
+}
+
+/* contaiers for individual left/right score */
+.scoreBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    gap: 0.25rem;
+}
+
+/* styling for the left score */
+#scoreLeft, #scoreLeftBuzz, #scoreLeftReveal, #scoreLeftAnswerCheck, #scoreLeftAnswerConfirm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 7px solid #5463f0;
+    border-radius: 10px;
+    background-color: #f5f0f0;
+    width: clamp(4rem, 8vw, 7rem);
+    height: clamp(4rem, 8vw, 7rem);
+
+    font-weight: 700;
+    font-size: clamp(3rem, calc(3vw + 3rem), 6rem);
+    color: rgb(44, 43, 43);
+}
+#underScoreLeft, #underScoreLeftBuzz, #underScoreLeftReveal, #underScoreLeftAnswerCheck, #underScoreLeftAnswerConfirm{
+    width: clamp(4rem, 8vw, 7rem);
+    height: 1rem;
+    background-color: #5463f0;
+    border-radius: 8px;
+}
+.spacerSquare {
+    background-color: #f5f0f0;
+    border: 2px solid #2c2b2b;
+    width: clamp(0.5rem, 5vw, 1.5rem);
+    height: clamp(0.5rem, 5vw, 1.5rem);
+    margin: 0.75rem;
+    align-self: center;
+}
+/* styling for the right score */
+#scoreRight, #scoreRightBuzz, #scoreRightReveal, #scoreRightAnswerCheck, #scoreRightAnswerConfirm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 7px solid #991B1B;
+    border-radius: 10px;
+    background-color: #f5f0f0;
+    width: clamp(4rem, 8vw, 7rem);
+    height: clamp(4rem, 8vw, 7rem);
+
+    font-weight: 700;
+    font-size: clamp(3rem, calc(3vw + 3rem), 6rem);
+    color: #2c2b2b;
+}
+#underScoreRight, #underScoreRightBuzz, #underScoreRightReveal, #underScoreRightAnswerCheck, #underScoreRightAnswerConfirm{
+    width: clamp(4rem, 8vw, 7rem);
+    height: 1rem;
+    background-color: #991B1B;
+    border-radius: 8px;
+}
+
+
+
+/* styling for the question container */
+#questionContainer, #questionContainerReveal, #questionContainerAnswerCheck, #questionContainerAnswerConfirm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap; /* allow wrapping */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+    margin-top: 2rem;
+    width: clamp(20rem, 80vw, 80rem);
+    min-height: clamp(4rem, 8vh, 10rem);
+    padding: 0.5rem 0.5rem;
+
+    font-size: clamp(0.75rem, 2vw, 2rem);
+    font-weight: 700;
+    text-align: center;
+    color: white;
+
+    background-color: #374667;
+    border-radius: 30px;
+}
+/* silver gradient borders  */
+.silver-border-question {
+    position: relative;
+    z-index: 0;
+    border: 7px solid transparent;
+    border-radius: 50px;
+
+    background-image:
+        linear-gradient(#374667, #374667), /* deep blue fill */
+        linear-gradient(to right, #888, #ccc, #fff); /* shiny silver border */
+    background-origin: padding-box, border-box;
+    background-clip: padding-box, border-box;
+
+    color: white;
+    text-align: center;
+}
+
+
+
+
+/* styling for question timer  */
+.timerBarContainer {
+    display: flex;
+    align-items: center;
+    width: clamp(20rem, 80vw, 80rem);
+    height: 1.25rem;
+    background-color: black;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 4rem;
+    padding: 0.25rem;
+}
+.timerFill {
+    height: 100%;
+    width: 100%;
+    background-color: #f5f0f0;
+    border-radius: 15px;  
+    transition: width linear;
+}
+
+
+
+/* styling for when team buzzes  */
+#buzzedScreen{
+    display:none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100dvh;
+}
+#buzz-message, #roundResult-message, #quizResult-message{
+    font-size: clamp(1.5rem, 3vw, 3rem);
+    font-weight: bold;
+    color: grey;
+    text-align: center;
+    margin-top: 2rem;
+}
+#buzzedPic{
+    width: clamp(3rem, 50vw, 20rem);
+    height: auto;
+    margin-top: 2rem;
+}
+
+
+
+/* styling to reveal correct answer */
+#questionScreenReveal{
+    display:none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100dvh;
+}
+
+
+
+/* styling for answer check */
+#teamAnswerCheck{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#buzzerContainerAnswerCheck{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: clamp(20rem, 80vw, 80rem);
+    margin-top: 3rem;
+    gap: 1rem;
+}
+#leftOptionAnswerCheck{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+#rightOptionAnswerCheck{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+
+/* styling for answer Confirm */
+#teamAnswerConfirm{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#buzzerContainerAnswerConfirm{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: clamp(20rem, 80vw, 80rem);
+    margin-top: 3rem;
+    gap: 1rem;
+}
+#leftOptionAnswerConfirm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+#rightOptionAnswerConfirm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+
+/* styling for round result */
+#roundResult{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#scoreObjectRoundResult{
+    display: flex;
+    flex-direction: row;
+    margin-top: 3rem;
+}
+/* contaiers for individual left/right score */
+.scoreBoxRoundResult{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    gap: 0.25rem;
+}
+/* styling for the left score */
+#scoreLeftRoundResult{
+    display: flex;;
+    justify-content: center;
+    align-items: center;
+    border: 7px solid #5463f0;
+    border-radius: 10px;
+    background-color: #f5f0f0;
+    width: clamp(4rem, 10vw, 12rem);
+    height: clamp(4rem, 10vw, 12rem);
+
+    font-weight: 700;
+    font-size: clamp(3rem, calc(5vw + 2rem), 10rem);
+    color: rgb(44, 43, 43);
+}
+#underScoreLeftRoundResult{
+    width: clamp(4rem, 10vw, 12rem);
+    height: 1rem;
+    background-color: #5463f0;
+    border-radius: 8px;
+}
+/* styling for the right score */
+#scoreRightRoundResult{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 7px solid #991B1B;
+    border-radius: 10px;
+    background-color: #f5f0f0;
+    width: clamp(4rem, 10vw, 12rem);
+    height: clamp(4rem, 10vw, 12rem);
+
+    font-weight: 700;
+    font-size: clamp(3rem, calc(5vw + 2rem), 10rem);
+    color: #2c2b2b;
+}
+#underScoreRightRoundResult{
+    width: clamp(4rem, 10vw, 12rem);
+    height: 1rem;
+    background-color: #991B1B;
+    border-radius: 8px;
+}
+/* styling for team buzzer images */
+#teamBuzzersContainerRoundResult{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: clamp(20rem, 80vw, 80rem);
+    margin-top: 1rem;
+    gap: 3rem;
+}
+
+
+
+/* styling for quiz result */
+#quizResult{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#scoreObjectQuizResult{
+    display: flex;
+    flex-direction: row;
+    margin-top: 3rem;
+}
+/* contaiers for individual left/right score */
+.scoreBoxQuizResult{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    gap: 0.25rem;
+}
+/* styling for the left score */
+#scoreLeftQuizResult{
+    display: flex;;
+    justify-content: center;
+    align-items: center;
+    border: 7px solid #5463f0;
+    border-radius: 10px;
+    background-color: #f5f0f0;
+    width: clamp(4rem, 10vw, 12rem);
+    height: clamp(4rem, 10vw, 12rem);
+
+    font-weight: 700;
+    font-size: clamp(3rem, calc(5vw + 2rem), 10rem);
+    color: rgb(44, 43, 43);
+}
+#underScoreLeftQuizResult{
+    width: clamp(4rem, 10vw, 12rem);
+    height: 1rem;
+    background-color: #5463f0;
+    border-radius: 8px;
+}
+/* styling for the right score */
+#scoreRightQuizResult{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 7px solid #991B1B;
+    border-radius: 10px;
+    background-color: #f5f0f0;
+    width: clamp(4rem, 10vw, 12rem);
+    height: clamp(4rem, 10vw, 12rem);
+
+    font-weight: 700;
+    font-size: clamp(3rem, calc(5vw + 2rem), 10rem);
+    color: #2c2b2b;
+}
+#underScoreRightQuizResult{
+    width: clamp(4rem, 10vw, 12rem);
+    height: 1rem;
+    background-color: #991B1B;
+    border-radius: 8px;
+}
+/* styling for team buzzer images */
+#teamBuzzersContainerQuizResult{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: clamp(20rem, 80vw, 80rem);
+    margin-top: 1rem;
+    gap: 3rem;
+}
+.teamBuzzer{
+    width: clamp(4rem, 10vw, 12rem);
+    height: auto;
+}
+
+
+
+
+
+
+/* responsive overrides for small screens */
+@media (max-width: 600px) {
+  .preSelect {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .option {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .buzzer, .flag {
+    width: clamp(6rem, 40vw, 8rem);
+  }
+
+  #redBar {
+    font-size: clamp(2rem, 6vw, 3rem);
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+
+
+
+
+/* USEFUL CLASSES  */
+
+/* font outline  */
+.outlined-text {
+  font: 800 40px Arial;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke: 3px;
+}
+/* font outline slimmer  */
+.outlined-text-slimmer {
+  font: 800 40px Arial;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke: 2px;
+}
+/* font outline slim  */
+.outlined-text-slim {
+  font: 800 40px Arial;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke: 1px;
+}
+
+.correct-answer {
+  background: #4CAF50 !important; /* Solid green background */
+  color: white !important;
+
+  /* Reset conflicting styles */
+  background-image: none !important;
+  background-clip: border-box !important;
+  border: 7px solid #2e7d32 !important;
+}
+
+
+
+
+#pictureContainer, #pictureContainerReveal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    width: clamp(20rem, 80vw, 80rem);
+    height: 30vh; /* Give it a visible height */
+    overflow: hidden;
+}
+
+#questionPicture, #questionPictureReveal {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.pixelated {
+    filter: blur(20px);
+    transition: filter 0.1s linear;
+}
+
+
+
+
+
+

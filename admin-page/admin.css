@@ -1,0 +1,133 @@
+/* Global styling */
+*{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Main body styling */
+body{
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:  1fr auto;
+    grid-template-areas:
+    "main"
+    "footer";
+    background-color: #204e74;
+}
+
+
+/* Main working area */
+#main{
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* container for checkbox and buttons */
+#main-selection{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+/* container for checkbox and buttons + all the grid options*/
+#checkAndButtons{
+    min-width: clamp(20rem, 80%, 30rem);
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    row-gap:1.5rem;
+    grid-template-areas: 
+    "aktivLabel none"
+    "checkWissens buttonWissens"
+    "checkBilder buttonBilder"
+    "checkSound buttonSound";
+}
+/* checks and quiz buttons*/
+#aktivLabel{
+    grid-area: aktivLabel;
+    justify-self: center;
+    align-self: center;
+    font-size: clamp(0.5rem, calc(0.5vw + 1rem), 1.5rem);
+    color: white;
+}
+#checkWissens{
+    grid-area: checkWissens;
+}
+#buttonWissens{
+    grid-area: buttonWissens;
+}
+#checkBilder{
+    grid-area: checkBilder;
+}
+#buttonBilder{
+    grid-area: buttonBilder;
+}
+#checkSound{
+    grid-area: checkSound;
+}
+#buttonSound{
+    grid-area: buttonSound;
+}
+/* modify the checkboxes spacing in the grid*/
+input[type="radio"] {
+    justify-self: center;
+    align-self: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: white;
+    border-radius: 0;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid white;
+}
+input[type="radio"]:checked {
+    background-color: #303030;
+    border: 2px solid white;
+}
+
+
+
+/* class for main buttons*/
+.mainButton{
+    font-size: clamp(0.5rem, calc(1vw + 1rem), 1.5rem);
+    padding: 1rem;
+    border: none;
+    border-radius: 25px;
+}
+.mainButton:hover {
+    background-color: #9b9b9b;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+
+/* Bottom back button */
+footer{
+    grid-area: footer;
+    display: flex;
+    justify-content: flex-end;
+    padding: 2rem;
+}
+
+/* class for back buttons*/
+.backButton{
+    font-size: clamp(0.5rem, calc(1vw + 1rem), 1.5rem);
+    min-width: clamp(1rem, 50%, 15rem);
+    padding: 1rem;
+    border: none;
+    border-radius: 25px;
+}
+.backButton:hover {
+    background-color: #9b9b9b;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}

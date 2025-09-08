@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktives Buzzer-Quiz</title>
+    <link rel="stylesheet" href="/quiz-bilder/bilderquiz.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div id="main">
+
+        <div id="title-container">
+            <div id="redBar" class="outlined-text-slimmer">
+                BILDERQUIZ
+            </div>
+        </div>
+
+        <form id="main-selection">
+
+            <!-- For clock -->
+            <div id="clockContainer">
+                <img src="/assets/Time.png" id="clockImg">
+                <label id="totalTimeLeft">06:00</label>
+            </div>
+
+            <!-- For selecting language -->
+            <div id="langSelect" class="preSelect outlined-text">
+                <div id="leftOption" class="option">
+                    <img src="/assets/German.png" class="flag">
+                    <img src="/assets/Buzzer_Green.png" class="buzzer">
+                </div>
+                <div id="rightOption" class="option">
+                    <img src="/assets/English.png" class="flag">
+                    <img src="/assets/Buzzer_Red.png" class="buzzer">
+                </div>
+            </div>
+
+            <!-- For whole game screen -->
+            <div id="questionScreen">
+                <!-- For score -->
+                <div id="scoreObject">
+                    <div id="scoreBoxLeft" class="scoreBox">
+                        <div id="scoreLeft" class="outlined-text">0</div>
+                        <div id="underScoreLeft"></div>
+                    </div>
+                    <div class="spacerSquare"></div>
+                    <div class="spacerSquare"></div>
+                    <div id="scoreBoxRight" class="scoreBox">
+                        <div id="scoreRight" class="outlined-text">0</div>
+                        <div id="underScoreRight"></div>
+                    </div>
+                </div>
+
+                <!-- Question -->
+                <div id="questionContainer" class="silver-border-question">Was ist auf dem Bild zu sehen?</div>
+
+                <!-- Picture -->
+                <div id="pictureContainer" class="pictureContainer">
+                    <img src="/assets/sampleImg2.jpg" id="questionPicture">
+                </div>
+
+                <!-- Timer bar -->
+                <div id="timerBarContainer" class="timerBarContainer">
+                    <div id="timerFill" class="timerFill"></div>
+                </div>
+            </div>
+
+            <!-- For when team buzzes in -->
+            <div id="buzzedScreen">
+                <!-- For score -->
+                <div id="scoreObjectBuzz">
+                    <div id="scoreBoxLeftBuzz" class="scoreBox">
+                        <div id="scoreLeftBuzz" class="outlined-text">0</div>
+                        <div id="underScoreLeftBuzz"></div>
+                    </div>
+                    <div class="spacerSquare"></div>
+                    <div class="spacerSquare"></div>
+                    <div id="scoreBoxRightBuzz" class="scoreBox">
+                        <div id="scoreRightBuzz" class="outlined-text">0</div>
+                        <div id="underScoreRightBuzz"></div>
+                    </div>
+                </div>
+
+                <!-- Announce who buzzed in -->
+                <div id="buzz-message" class="outlined-text-slim">
+                    TEAM (?) HAT GEBUZZERT! <br>NENNT JETZT DIE RICHTIGE LÖSUNG
+                </div>
+
+                <!-- Buzz picture -->
+                <img src="/assets/Buzzed.png" id="buzzedPic">
+
+                <!-- Timer bar -->
+                <div id="timerBarContainerBuzz" class="timerBarContainer">
+                    <div id="timerFillBuzz" class="timerFill"></div>
+                </div>
+            </div>
+
+            <!-- For displaying correct answer -->
+            <div id="questionScreenReveal">
+                <!-- For score -->
+                <div id="scoreObjectReveal">
+                    <div id="scoreBoxLeftReveal" class="scoreBox">
+                        <div id="scoreLeftReveal" class="outlined-text">0</div>
+                        <div id="underScoreLeftReveal"></div>
+                    </div>
+                    <div class="spacerSquare"></div>
+                    <div class="spacerSquare"></div>
+                    <div id="scoreBoxRightReveal" class="scoreBox">
+                        <div id="scoreRightReveal" class="outlined-text">0</div>
+                        <div id="underScoreRightReveal"></div>
+                    </div>
+                </div>
+
+                <!-- Reveal -->
+                <div id="questionContainerReveal" class="silver-border-question">Die richtige Antwort lautet:</div>
+
+                <!-- Picture -->
+                <div id="pictureContainerReveal" class="pictureContainer">
+                    <img src="/assets/sampleImg.jpg" id="questionPictureReveal">
+                </div>
+
+            </div>
+
+
+            <!-- Ask if team answer was correct or not -->
+            <div id="teamAnswerCheck">
+                <!-- For score -->
+                <div id="scoreObjectAnswerCheck">
+                    <div id="scoreBoxLeftAnswerCheck" class="scoreBox">
+                        <div id="scoreLeftAnswerCheck" class="outlined-text">0</div>
+                        <div id="underScoreLeftAnswerCheck"></div>
+                    </div>
+                    <div class="spacerSquare"></div>
+                    <div class="spacerSquare"></div>
+                    <div id="scoreBoxRightAnswerCheck" class="scoreBox">
+                        <div id="scoreRightAnswerCheck" class="outlined-text">0</div>
+                        <div id="underScoreRightAnswerCheck"></div>
+                    </div>
+                </div>
+
+                <!-- Ask if team answered correctly -->
+                <div id="questionContainerAnswerCheck" class="silver-border-question">War die Antwort richtig oder falsch?</div>
+
+                <!-- For buzzer check-->
+                <div id="buzzerContainerAnswerCheck">
+                    <div id="leftOptionAnswerCheck">
+                        <label id="leftLabelAnswerCheck" class="outlined-text-slimmer">Richtig</label>
+                        <img src="/assets/Buzzer_Green.png" class="buzzer">
+                    </div>
+                    <div id="rightOptionAnswerCheck">
+                        <label id="rightLabelAnswerCheck" class="outlined-text-slimmer">Falsch</label>
+                        <img src="/assets/Buzzer_Red.png" class="buzzer">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Ask if team answer confirm or make correction -->
+            <div id="teamAnswerConfirm">
+                <!-- For score -->
+                <div id="scoreObjectAnswerConfirm">
+                    <div id="scoreBoxLeftAnswerConfirm" class="scoreBox">
+                        <div id="scoreLeftAnswerConfirm" class="outlined-text">0</div>
+                        <div id="underScoreLeftAnswerConfirm"></div>
+                    </div>
+                    <div class="spacerSquare"></div>
+                    <div class="spacerSquare"></div>
+                    <div id="scoreBoxRightAnswerConfirm" class="scoreBox">
+                        <div id="scoreRightAnswerConfirm" class="outlined-text">0</div>
+                        <div id="underScoreRightAnswerConfirm"></div>
+                    </div>
+                </div>
+
+                <!-- Ask if team answered correctly -->
+                <div id="questionContainerAnswerConfirm" class="silver-border-question">Bitte bestätigt, dass eure Eingabe richtig war</div>
+
+                <!-- For buzzer check-->
+                <div id="buzzerContainerAnswerConfirm">
+                    <div id="leftOptionAnswerConfirm">
+                        <label id="leftLabelAnswerConfirm" class="outlined-text-slimmer">Bestätigen</label>
+                        <img src="/assets/Buzzer_Green.png" class="buzzer">
+                    </div>
+                    <div id="rightOptionAnswerConfirm">
+                        <label id="rightLabelAnswerConfirm" class="outlined-text-slimmer">Korrigieren</label>
+                        <img src="/assets/Buzzer_Red.png" class="buzzer">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Screen for quiz round result -->
+            <div id="roundResult">
+                <!-- Announce round result-->
+                <div id="roundResult-message" class="outlined-text-slim">
+                    EIN PUNKT FÜR TEAM (?)!
+                </div>
+
+                <!-- For score -->
+                <div id="scoreObjectRoundResult">
+                    <div id="scoreBoxLeftRoundResult" class="scoreBoxRoundResult">
+                        <div id="scoreLeftRoundResult" class="outlined-text">0</div>
+                        <div id="underScoreLeftRoundResult"></div>
+                    </div>
+                    <div class="spacerSquare"></div>
+                    <div class="spacerSquare"></div>
+                    <div id="scoreBoxRightRoundResult" class="scoreBoxRoundResult">
+                        <div id="scoreRightRoundResult" class="outlined-text">0</div>
+                        <div id="underScoreRightRoundResult"></div>
+                    </div>
+                </div>
+
+                <div id="teamBuzzersContainerRoundResult">
+                    <!-- team buzzer pictures -->
+                    <img src="/assets/Teambuzzer_Blue.png" class="teamBuzzer">
+                    <img src="/assets/Teambuzzer_Red.png" class="teamBuzzer">
+                </div>
+            </div>
+
+
+            <!-- Screen for quiz result -->
+            <div id="quizResult">
+                <!-- Announce quiz result-->
+                <div id="quizResult-message" class="outlined-text-slim">
+                    TEAM (?) GEWINNT!
+                </div>
+
+                <!-- For score -->
+                <div id="scoreObjectQuizResult">
+                    <div id="scoreBoxLeftQuizResult" class="scoreBoxQuizResult">
+                        <div id="scoreLeftQuizResult" class="outlined-text">0</div>
+                        <div id="underScoreLeftQuizResult"></div>
+                    </div>
+                    <div class="spacerSquare"></div>
+                    <div class="spacerSquare"></div>
+                    <div id="scoreBoxRightQuizResult" class="scoreBoxQuizResult">
+                        <div id="scoreRightQuizResult" class="outlined-text">0</div>
+                        <div id="underScoreRightQuizResult"></div>
+                    </div>
+                </div>
+
+                <div id="teamBuzzersContainerQuizResult">
+                    <!-- team buzzer pictures -->
+                    <img src="/assets/Teambuzzer_Blue.png" class="teamBuzzer">
+                    <img src="/assets/Teambuzzer_Red.png" class="teamBuzzer">
+                </div>
+            </div>
+            
+
+
+        </form>
+    </div>
+    <script type="module" src="/buzzer-client.js"></script>
+    <script type="module" src="/quiz-bilder/bilderquiz.js"></script>
+</body>
+</html>

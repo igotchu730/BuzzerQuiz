@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktives Buzzer-Quiz</title>
+    <link rel="stylesheet" href="/admin-page/admin.css">
+</head>
+<body>
+
+    <div id="main">
+        <form id="main-selection">
+            <div id="checkAndButtons">
+                <label id="aktivLabel">Aktiv</label>
+
+                <input type="radio" name="quizType" value="Wissensquiz" id="checkWissens">
+                <button type="button" value="Wissensquiz" id="buttonWissens" class="mainButton">Wissensquiz</button>
+
+                <input type="radio" name="quizType" value="Bilderquiz"id="checkBilder">
+                <button type="button" value="Bilderquiz" id="buttonBilder" class="mainButton">Bilderquiz</button>
+
+                <input type="radio" name="quizType" value="Soundquiz" id="checkSound">
+                <button type="button" value="Soundquiz" id="buttonSound" class="mainButton">Soundquiz</button>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <button type="button" onclick="location.href='/';" class="backButton">Zurück</button>
+    </footer>
+
+    <script src="/admin-page/admin.js"></script>
+</body>
+</html>

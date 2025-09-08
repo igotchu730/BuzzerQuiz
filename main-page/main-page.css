@@ -1,0 +1,59 @@
+/* Global styling */
+*{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Main body styling */
+body{
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    background-color: #204e74;
+}
+
+/* Main working area */
+#main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Main title */
+#main-title{
+    display: flex;
+    justify-content: center;
+    font-size: clamp(3rem, calc(3vw + 1rem), 5rem);
+    padding: 5rem;
+    color: white;
+}
+
+/* container for buttons */
+#main-selection{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#button-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: clamp(20rem, 80%, 30rem);
+    gap: 1rem;
+}
+
+/* class for main buttons*/
+.mainButton{
+    font-size: clamp(0.5rem, calc(1vw + 1rem), 1.5rem);
+    padding: 1rem;
+    border: none;
+    border-radius: 25px;
+}
+.mainButton:hover {
+    background-color: #9b9b9b;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
