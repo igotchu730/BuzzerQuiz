@@ -1,8 +1,9 @@
-// Updated tools.js with MongoDB-compatible methods using Fetch
+// Use API_BASE from config.js
+const API_BASE = window.API_BASE;
 
 // Fetch all quizzes
 async function getAllQuizNames() {
-    const res = await fetch('http://localhost:3000/api/quizzes');
+    const res = await fetch(`${API_BASE}/api/quizzes`);
     const quizzes = await res.json();
     return quizzes.map(q => q.quizName);
 }
@@ -10,15 +11,14 @@ async function getAllQuizNames() {
 // Check if quiz name exists
 async function checkDuplicates(quizName, quizType, quizAge, quizLanguage) {
     const params = new URLSearchParams({ quizName, quizType, quizAge, quizLanguage });
-    const res = await fetch(`http://localhost:3000/api/quiz/check-duplicate?${params}`);
+    const res = await fetch(`${API_BASE}/api/quiz/check-duplicate?${params}`);
     const data = await res.json();
     return data.exists;
 }
 
-
 // Save a new quiz
 async function saveToMongo(quizObj) {
-    const res = await fetch('http://localhost:3000/api/quiz', {
+    const res = await fetch(`${API_BASE}/api/quiz`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(quizObj)
@@ -43,7 +43,7 @@ async function updateQuizQuestions(quizName, questionObj, quizType, quizAge, qui
         if (questionObj.imageFile) formData.append("image", questionObj.imageFile);
         if (questionObj.soundFile) formData.append("newSound", questionObj.soundFile);
 
-        const res = await fetch(`http://localhost:3000/api/quiz/${quizName}/upload-media`, {
+        const res = await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}/upload-media`, {
             method: 'POST',
             body: formData
         });
@@ -55,10 +55,9 @@ async function updateQuizQuestions(quizName, questionObj, quizType, quizAge, qui
         } else {
             console.log(`Question added to "${quizName}" (with media)`, questionObj);
         }
-
     } else {
         // Non-media (e.g., Wissensquiz)
-        const res = await fetch(`http://localhost:3000/api/quiz/${quizName}/add-question`, {
+        const res = await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}/add-question`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -82,13 +81,9 @@ async function updateQuizQuestions(quizName, questionObj, quizType, quizAge, qui
     }
 }
 
-
-
-
-
 // Get full quiz by name
 async function getQuizByName(quizName, quizType, quizAge, quizLanguage) {
-    const res = await fetch('http://localhost:3000/api/quizzes');
+    const res = await fetch(`${API_BASE}/api/quizzes`);
     const quizzes = await res.json();
 
     return quizzes.find(q =>
@@ -101,36 +96,30 @@ async function getQuizByName(quizName, quizType, quizAge, quizLanguage) {
     );
 }
 
-
-// Populate saved quizzes, with admin seelected parameters
+// Populate saved quizzes
 async function populateFromMongo(containerId) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
 
-    // get params from current URL
     const params = new URLSearchParams(window.location.search);
     const selectedType = params.get('quizType');
     const selectedAge = params.get('quizAge');
     const selectedLang = params.get('quizLanguage');
 
-    // fetch all quizzes
-    const res = await fetch('http://localhost:3000/api/quizzes');
+    const res = await fetch(`${API_BASE}/api/quizzes`);
     const allQuizzes = await res.json();
 
-    // filter only those matching current URL params
     const filtered = allQuizzes.filter(q =>
         q.quizType === selectedType &&
         (selectedAge ? q.quizAge === selectedAge : true) &&
         q.quizLanguage === selectedLang
     );
 
-
     if (filtered.length === 0) {
         container.innerHTML = '<p style="color:white;">Keine gespeicherten Quizze.</p>';
         return;
     }
 
-    // render each matching quiz name
     filtered.forEach((quiz, index) => {
         const wrapper = document.createElement('div');
         wrapper.className = 'questionContainer';
@@ -138,7 +127,6 @@ async function populateFromMongo(containerId) {
         container.appendChild(wrapper);
     });
 }
-
 
 // Populate questions
 async function populateQuestionsFromMongo(quizName, quizType, quizAge, quizLanguage, containerId, renderItem) {
@@ -156,11 +144,10 @@ async function populateQuestionsFromMongo(quizName, quizType, quizAge, quizLangu
     });
 }
 
-
 // Delete quiz by name
 async function deleteQuizByName(quizName, quizType, quizAge, quizLanguage) {
     console.log("Deleting:", quizName, quizType, quizAge, quizLanguage);
-    const res = await fetch(`http://localhost:3000/api/quiz/delete-by-params`, {
+    const res = await fetch(`${API_BASE}/api/quiz/delete-by-params`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ quizName, quizType, quizAge, quizLanguage })
@@ -173,10 +160,10 @@ async function deleteQuizByName(quizName, quizType, quizAge, quizLanguage) {
     }
 }
 
-// edit questions
+// Edit questions
 async function editQuizQuestionAtIndex(quizName, index, questionObj, quizType, quizAge, quizLanguage) {
     try {
-        const res = await fetch(`http://localhost:3000/api/quiz/${quizName}/edit-question`, {
+        const res = await fetch(`${API_BASE}/api/quiz/${encodeURIComponent(quizName)}/edit-question`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
