@@ -5,6 +5,8 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const crypto = require('crypto');
+require('dotenv').config();
+
 
 // use disk storage to store files
 const storage = multer.diskStorage({
@@ -33,8 +35,13 @@ app.use(cors());
 // auto parse incoming JSON requests
 app.use(express.json());
 
+
+
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/quizapp');
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017/quizapp';
+const PORT = process.env.PORT || 3000;
+mongoose.connect(MONGO_URL);
+
 
 
 // Define Schema
@@ -634,5 +641,7 @@ app.get('/api/quiz/by-params', async (req, res) => {
 
 
 
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+app.listen(PORT, '0.0.0.0', () =>
+  console.log(`Server running on http://localhost:${PORT}`)
+);
 
